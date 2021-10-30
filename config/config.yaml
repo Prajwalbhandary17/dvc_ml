@@ -1,5 +1,6 @@
-datasource: E:/winequality-red.csv
-# http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv
+data_source: E:\winequality-red.csv 
+  #http://archive.ics.uci.edu/ml/machine-learning-databases/wine-quality/winequality-red.csv
+#E:/winequality-red.csv
 artifacts:
   artifacts_dir: artifacts
   raw_local_dir: raw_local_dir
