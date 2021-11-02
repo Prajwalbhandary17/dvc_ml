@@ -1,12 +1,15 @@
 schema: '2.0'
 stages:
   split_data:
-    cmd: python src/stage_01_split_data.py --config=config/config.yaml --params=params.yaml
+    cmd: python src/stage_02_split_data.py --config=config/config.yaml --params=params.yaml
     deps:
+    - path: artifacts/raw_local_dir/data.csv
+      md5: 7d814a1bda02145efe703f4e1c01847a
+      size: 93599
     - path: config/config.yaml
-      md5: 97952c8e032889d4164398fc7436b57d
-      size: 306
-    - path: src/stage_01_split_data.py
+      md5: e8e9d28f4bf3ea1bcb50bacfd40b3560
+      size: 364
+    - path: src/stage_02_split_data.py
       md5: c368ff081ee72e3cb32e1975829886dd
       size: 1754
     - path: src/utils/all_utils.py
@@ -27,8 +30,8 @@ stages:
     cmd: python src/stage_01_load_save.py --config=config/config.yaml
     deps:
     - path: config/config.yaml
-      md5: 97952c8e032889d4164398fc7436b57d
-      size: 306
+      md5: e8e9d28f4bf3ea1bcb50bacfd40b3560
+      size: 364
     - path: src/stage_01_load_save.py
       md5: 850e17b6706f53f32c55f5070fee84ab
       size: 1025
@@ -39,3 +42,30 @@ stages:
     - path: artifacts/raw_local_dir/data.csv
       md5: 7d814a1bda02145efe703f4e1c01847a
       size: 93599
+  train:
+    cmd: python src/stage_03_train.py --config=config/config.yaml --params=params.yaml
+    deps:
+    - path: artifacts/split_data_dir/test.csv
+      md5: 3a3eef9f920deae72cb9bcd7b91231f1
+      size: 28169
+    - path: artifacts/split_data_dir/train.csv
+      md5: 5e5a3523f0fba3925dc577c3baf2c5cd
+      size: 65577
+    - path: config/config.yaml
+      md5: e8e9d28f4bf3ea1bcb50bacfd40b3560
+      size: 364
+    - path: src/stage_03_train.py
+      md5: 2356dfde5bdf82c0794b6ab08009e4d4
+      size: 2140
+    - path: src/utils/all_utils.py
+      md5: e04d2e467f94fe3d8db83ff01f10714b
+      size: 490
+    params:
+      params.yaml:
+        base.random_state: 42
+        model_params.ElasticNet.alpha: 0.5
+        model_params.ElasticNet.l1_ratio: 0.5
+    outs:
+    - path: artifacts/model_dir/ElasticNet.model
+      md5: f12d96f9273ea2e57cf7ac3f9415f8d2
+      size: 1316
